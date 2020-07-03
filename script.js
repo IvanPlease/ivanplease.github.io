@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-    var apiRoot = 'http://localhost:8080/v1/task/';
+    var apiRoot = 'http://localhost:8080/v1/crud/';
     var datatableRowTemplate = $('[data-datatable-row-template]').children()[0];
     var tasksContainer = $('[data-tasks-container]');
   
@@ -33,6 +33,7 @@ $(document).ready(function() {
       $.ajax({
         url: requestUrl,
         method: 'GET',
+        contentType: "application/json; charset=utf-8",
         success: handleDatatableRender
       });
     }
@@ -73,6 +74,7 @@ $(document).ready(function() {
           taskId: taskId
         }),
         method: 'DELETE',
+        contentType: "application/json; charset=utf-8",
         success: function() {
           parentEl.slideUp(400, function() { parentEl.remove(); });
         }
