@@ -80,7 +80,6 @@ $(document).ready(function() {
   }
 
   function handleTaskSubmitRequest(event) {
-    console.log("ELO");
     event.preventDefault();
 
     var taskTitle = $(this).find('[name="title"]').val();
