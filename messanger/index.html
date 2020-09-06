@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <title>Java Communicator</title>
+    <script src="https://kit.fontawesome.com/319848648c.js" crossorigin="anonymous"></script>
+    <style>
+        body,html{
+            height: 100%;
+            max-height: 100%;
+            overflow:hidden;
+            background-color:#1ccc90;
+        }
+        *{
+            font-family: 'Nunito', sans-serif;
+        }
+        .col-left{
+            background-color: #072f2c;
+        }
+        .message-container>.row>div>span{
+            display: inline-block;
+            padding: 10px 15px;
+            border-radius: 15px;
+            max-width: 75%;
+            background-color: #f1f1f1;
+        }
+        .remove-paddings{
+            padding-left: 0;
+            padding-right: 0;
+        }
+        .restore-paddings{
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+        #messageBoxTag{
+            width: 100%;
+            height: 100%;
+        }
+        #messageBoxTag>div>div{
+            max-width: 75% !important;
+        }
+        .message-blop{
+            padding: 10px 15px !important;
+            border-radius: 15px;
+        }
+        .message-blop[data-author="user"]{
+            background-color: #00dcff;
+            color: #fff;
+        }
+        .message-blop[data-author="sender"]{
+            background-color: #0c5651;
+            color: #dedede;
+        }
+        .message-blop[data-cluster=true]{
+            margin-bottom: 1px !important;
+        }
+        .message-blop[data-author="user"][data-cluster=true][data-cluster-pos="start"]{
+            border-bottom-right-radius: 5px;
+        }
+        .message-blop[data-author="user"][data-cluster=true][data-cluster-pos="middle"]{
+            border-bottom-right-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+        .message-blop[data-author="user"][data-cluster=true][data-cluster-pos="end"]{
+            border-top-right-radius: 5px;
+        }
+        .message-blop[data-author="sender"][data-cluster=true][data-cluster-pos="start"]{
+            border-bottom-left-radius: 5px;
+        }
+        .message-blop[data-author="sender"][data-cluster=true][data-cluster-pos="middle"]{
+            border-bottom-left-radius: 5px;
+            border-top-left-radius: 5px;
+        }
+        .message-blop[data-author="sender"][data-cluster=true][data-cluster-pos="end"]{
+            border-top-left-radius: 5px;
+        }
+        .input-box{
+            width: 95%;
+            height: 60%;
+            border-radius: 50px;
+            background: #ccc;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%,-50%);
+        }
+        .messanger-input{
+            width: 100%;
+            height: 100%;
+            outline: none;
+            border-radius: 50px;
+            border: none;
+            background-color: transparent;
+            padding-left: 25px;
+        }
+        .send-button{
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            border: none;
+            width: 35px;
+            height: 35px;
+            transform: translateY(-50%);
+            background-color: #3e3e3e;
+            border-radius: 50%;
+            transition: 1s;
+        }
+        .send-button:hover{
+            background-color: #656565;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid h-100">
+        <div class="row h-100">
+            <div class="col-sm-4 col-md-3 col-lg-2 col-left"></div>
+            <div class="col-sm-8 col-md-9 col-lg-10 remove-paddings">
+                <div class="container-fluid h-100">
+                    <div class="h-100 d-flex flex-column bd-highlight">
+                        <div class="row" style="height: 6vh;background-color: #0c5651"></div>
+                        <div class="row" style="height: calc(100vh - 14vh);max-height: calc(100vh - 14vh);">
+                            <div class="d-flex flex-column-reverse bd-highlight" id="messageBoxTag">
+                            </div>
+                        </div>
+                        <div class="row" style="height: 8vh;position:relative;">
+                            <div class="input-box">
+                                <input class="messanger-input"/>
+                                <button class="send-button">
+                                    <i class="far fa-paper-plane" style="color: #1ccc90"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+   
+    <script>
+        var cluster_check = false;
+
+        $(document).ready(function(){
+            var box = [{userMsg: true, content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus in volutpat ligula. Etiam tempus quis massa rutrum lobortis. Integer ut scelerisque ex. Praesent in magna sed tellus viverra auctor. Morbi quis nisl tempor, mattis diam quis, aliquam magna. Proin eget pulvinar lectus. In non nisi sed ex molestie blandit. Curabitur dignissim tellus quis arcu cursus sagittis. Ut neque velit, pulvinar quis neque sit amet, porta feugiat diam. Morbi euismod sit amet urna et laoreet. Ut lacus justo, sodales vel volutpat sit amet, auctor id quam. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Fusce faucibus condimentum auctor."},{userMsg: true, content: "message"},{userMsg: true, content: "message"},{userMsg: false, content: "message #2"}, {userMsg: false, content: "message #3"}, {userMsg: false, content: "message #4"}];
+            box.forEach(msg => {
+                addMessage(msg)
+            });
+        });
+
+        function addMessage(msg){ //on new message recieved while online
+            var messageBoxTag = "#messageBoxTag";
+            var messageBlop = '<div class="d-flex flex-row${messageSide} bd-highlight mb-3 restore-paddings"><div class="d-inline-flex p-2 bd-highlight message-blop" data-author="${messageAuthor}"${clusterContent}>${messageContent}</div></div>';
+            var author = (msg.userMsg) ? "user":"sender";
+            var side = (msg.userMsg) ? "-reverse":"";
+            var check = $("#messageBoxTag")[0].children.length;
+            if(check != 0){
+                if($("#messageBoxTag")[0].children[0].children[0].dataset.author == author){
+                    if(cluster_check == false){
+                        $("#messageBoxTag")[0].children[0].classList.remove("mb-3");
+                        $("#messageBoxTag")[0].children[0].children[0].setAttribute("data-cluster", true);
+                        $("#messageBoxTag")[0].children[0].children[0].setAttribute("data-cluster-pos", "start");
+                        messageBlop = messageBlop.replace("${clusterContent}", " data-cluster=true data-cluster-pos=\"end\"");
+                        cluster_check = true;
+                    }else{
+                        $("#messageBoxTag")[0].children[0].classList.remove("mb-3");
+                        $("#messageBoxTag")[0].children[0].children[0].setAttribute("data-cluster-pos", "middle");
+                        messageBlop = messageBlop.replace("${clusterContent}", " data-cluster=true data-cluster-pos=\"end\"");
+                    }
+                }else{
+                    if(cluster_check){
+                        cluster_check = false;
+                    }
+                }
+            }
+            $(messageBoxTag).prepend(messageBlop.replace("${messageContent}", msg.content).replace("${messageAuthor}", author).replace("${messageSide}", side).replace("${clusterContent}", ""));
+        }
+
+    </script>
+</body>
+</html>
