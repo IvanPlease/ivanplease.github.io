@@ -98,7 +98,7 @@ body,html{
     border-radius: 50%;
     transition: 1s;
 }
-.send-button:hover{
+button:hover{
     background-color: #656565;
 }
 .layout-boxes>.row:first-child{
@@ -122,7 +122,11 @@ body,html{
     transform: translateY(-50%);
     margin-left: 15px;
 }
-.send-button>i{
+button>i{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
     color: #1ccc90;
 }
 span[data-status]{
@@ -227,4 +231,44 @@ span[data-status="offline"]::before{
     left: 50%;
     top: 50%;
     transform: translate(-50%,-50%);
+}
+.friend-name-input-box{
+    background: #ccc;
+    position: relative;
+    padding: 5px 10px;
+    border-radius: 10px;
+    border: 1px solid #00000050;
+}
+.friend-name-input-box>input{
+    background: transparent;
+    border: none;
+    width: 100%;
+    outline: none;
+    margin-left: 5px;
+}
+.find-button{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 10px;
+    border: none;
+    width: 25px;
+    height: 25px;
+    background-color: #3e3e3e;
+    border-radius: 50%;
+    transition: 1s;
+}
+.find-button>i{
+    font-size:.95em;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+.close{
+    line-height: normal;
+    font-size: 1.25rem;
+}
+*:focus{
+    outline: none !important;
 }
