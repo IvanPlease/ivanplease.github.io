@@ -147,6 +147,11 @@ span[data-status="offline"]::before{
     color: red;
     content: "[offline]";
 }
+input:focus{
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+}
 .col-left>div>div>.row:first-child>.d-inline-flex::before{
     color: #ffffff50;
     font-size: 1.1rem;
