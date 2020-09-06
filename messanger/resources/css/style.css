@@ -148,9 +148,13 @@ span[data-status="offline"]::before{
     content: "[offline]";
 }
 .col-left>div>div>.row:first-child>.d-inline-flex::before{
-    position: relative;
     color: #ffffff50;
+    font-size: 1.1rem;
+    position: absolute;
     content: "Java Communicator";
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%,-60%);
 }
 .col-left>div>div>.row:first-child>.d-inline-flex::after {
     content : "";
