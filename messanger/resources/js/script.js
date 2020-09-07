@@ -5,13 +5,19 @@ $(document).ready(function(){
     box.forEach(msg => {
         addMessage(msg)
     });
+    box.forEach(msg => {
+        addMessage(msg)
+    });
+    box.forEach(msg => {
+        addMessage(msg)
+    });
     $("#friendSearch").on('click', function(){
         var element = $("#friendSearch").parent().find("input");
-        var inputMessage = element.val();
-        var ajaxValue = {searchType: 0, searchValue: inputMessage};
-        if(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/g.test(inputMessage)){
+        var searchTerm = element.val().toLowerCase();
+        var ajaxValue = {searchType: 0, searchValue: searchTerm};
+        if(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/g.test(searchTerm)){
             ajaxValue.searchType = 2;
-        }else if(/^\b[a-zA-Z]+\b\s\b[a-zA-Z]+\b$/g.test(inputMessage) || /\b[a-zA-Z]+\b$/g.test(inputMessage)){
+        }else if(/^\b[a-zA-Z]+\b\s\b[a-zA-Z]+\b$/g.test(searchTerm) || /\b[a-zA-Z]+\b$/g.test(searchTerm)){
             ajaxValue.searchType = 1;
         }
         element.val('');
