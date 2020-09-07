@@ -1,177 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-    <link type="text/css" href="resources/css/style.css" rel="stylesheet">
-    <title>Java Communicator</title>
-    <script src="https://kit.fontawesome.com/319848648c.js" crossorigin="anonymous"></script>
-</head>
-<body>
-    <div class="container-fluid h-100">
-        <div class="row h-100">
-            <div class="col-sm-4 col-md-3 col-lg-2 col-left">
-                <div class="containe-fluid h-100">
-                    <div class="h-100 d-flex flex-column">
-                        <div class="row">
-                            <div class="d-inline-flex justify-content-center p-2 w-100 mb-3 mt-3"></div>
-                        </div>
-                        <div class="row">
-                            <div class="d-flex flex-column w-100">
-                                <div class="d-flex flex-row" data-active-convo=true>
-                                    <div class="d-inline-flex p-2">
-                                        <div class="image-wrap">
-                                            <img src="https://scontent.fwaw5-1.fna.fbcdn.net/v/t1.0-1/cp0/c0.3.60.60a/p60x60/45405063_1485165051627905_8339518959053176832_o.jpg?_nc_cat=101&_nc_sid=7206a8&_nc_ohc=1jCqYDZG-9IAX-7cqoT&_nc_ht=scontent.fwaw5-1.fna&oh=65e621694db386c2718b386d2b50622e&oe=5F7C52B4"/>
-                                        </div>
-                                        <div>
-                                            Alkoholik <span data-status="online"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="d-flex flex-row">
-                                    <div class="d-inline-flex p-2">
-                                        <div class="image-wrap">
-                                            <img src="https://scontent.fwaw5-1.fna.fbcdn.net/v/t1.0-1/cp0/c0.3.60.60a/p60x60/45405063_1485165051627905_8339518959053176832_o.jpg?_nc_cat=101&_nc_sid=7206a8&_nc_ohc=1jCqYDZG-9IAX-7cqoT&_nc_ht=scontent.fwaw5-1.fna&oh=65e621694db386c2718b386d2b50622e&oe=5F7C52B4"/>
-                                        </div>
-                                        <div>
-                                            Alkoholik <span data-status="offline"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="d-flex flex-row">
-                                    <div class="d-inline-flex p-2">
-                                        <div class="image-wrap">
-                                            <img src="https://scontent.fwaw5-1.fna.fbcdn.net/v/t1.0-1/cp0/c0.3.60.60a/p60x60/45405063_1485165051627905_8339518959053176832_o.jpg?_nc_cat=101&_nc_sid=7206a8&_nc_ohc=1jCqYDZG-9IAX-7cqoT&_nc_ht=scontent.fwaw5-1.fna&oh=65e621694db386c2718b386d2b50622e&oe=5F7C52B4"/>
-                                        </div>
-                                        <div>
-                                            Alkoholik <span data-status="offline"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="d-flex flex-row">
-                                    <div class="d-inline-flex p-2">
-                                        <div class="image-wrap">
-                                            <img src="https://scontent.fwaw5-1.fna.fbcdn.net/v/t1.0-1/cp0/c0.3.60.60a/p60x60/45405063_1485165051627905_8339518959053176832_o.jpg?_nc_cat=101&_nc_sid=7206a8&_nc_ohc=1jCqYDZG-9IAX-7cqoT&_nc_ht=scontent.fwaw5-1.fna&oh=65e621694db386c2718b386d2b50622e&oe=5F7C52B4"/>
-                                        </div>
-                                        <div>
-                                            Alkoholik <span data-status="offline"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="d-flex flex-row">
-                                    <div class="d-inline-flex p-2">
-                                        <div class="image-wrap">
-                                            <img src="https://scontent.fwaw5-1.fna.fbcdn.net/v/t1.0-1/cp0/c0.3.60.60a/p60x60/45405063_1485165051627905_8339518959053176832_o.jpg?_nc_cat=101&_nc_sid=7206a8&_nc_ohc=1jCqYDZG-9IAX-7cqoT&_nc_ht=scontent.fwaw5-1.fna&oh=65e621694db386c2718b386d2b50622e&oe=5F7C52B4"/>
-                                        </div>
-                                        <div>
-                                            Alkoholik <span data-status="offline"></span>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+        <link type="text/css" href="resources/css/style.css" rel="stylesheet">
+        <title>Java Communicator</title>
+        <script src="https://kit.fontawesome.com/319848648c.js" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <div class="container-fluid h-100">
+            <div class="row h-100">
+                <div class="col-sm-4 col-md-3 col-lg-2 col-left">
+                    <div class="containe-fluid h-100">
+                        <div class="h-100 d-flex flex-column">
+                            <div class="row">
+                                <div class="d-inline-flex justify-content-center p-2 w-100 mb-3 mt-3"></div>
+                            </div>
+                            <div class="row">
+                                <div class="d-flex flex-column w-100">
+                                    <div class="d-flex flex-row" data-active-convo=true>
+                                        <div class="d-inline-flex p-2">
+                                            <div class="image-wrap">
+                                                <img src="https://scontent.fwaw5-1.fna.fbcdn.net/v/t1.0-1/cp0/c0.3.60.60a/p60x60/45405063_1485165051627905_8339518959053176832_o.jpg?_nc_cat=101&_nc_sid=7206a8&_nc_ohc=1jCqYDZG-9IAX-7cqoT&_nc_ht=scontent.fwaw5-1.fna&oh=65e621694db386c2718b386d2b50622e&oe=5F7C52B4"/>
+                                            </div>
+                                            <div>
+                                                Alkoholik <span data-status="online"></span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="d-inline-flex w-100">
-                                <div class="flex-fill bd-highlight"><i class="fas fa-door-open"></i></div>
-                                <div class="flex-fill bd-highlight"><i class="fas fa-user-edit"></i></div>
-                                <div class="flex-fill bd-highlight" data-toggle="modal" data-target="#addFriendModal"><i class="fas fa-user-plus"></i></div>
+                            <div class="row">
+                                <div class="d-inline-flex w-100">
+                                    <div class="flex-fill bd-highlight"><i class="fas fa-door-open"></i></div>
+                                    <div class="flex-fill bd-highlight"><i class="fas fa-user-edit"></i></div>
+                                    <div class="flex-fill bd-highlight" data-toggle="modal" data-target="#addFriendModal"><i class="fas fa-user-plus"></i></div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-sm-8 col-md-9 col-lg-10 remove-paddings">
-                <div class="container-fluid h-100">
-                    <div class="h-100 d-flex flex-column layout-boxes">
-                        <div class="row">
-                            <div class="d-inline-flex p-2">
-                                Alkoholik <span data-status="online"></span>
+                <div class="col-sm-8 col-md-9 col-lg-10 remove-paddings">
+                    <div class="container-fluid h-100">
+                        <div class="h-100 d-flex flex-column layout-boxes">
+                            <div class="row">
+                                <div class="d-inline-flex p-2">
+                                    Alkoholik <span data-status="online"></span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="d-flex flex-column-reverse " id="messageBoxTag">
+                            <div class="row">
+                                <div class="d-flex flex-column-reverse " id="messageBoxTag">
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="input-box">
-                                <input class="messanger-input"/>
-                                <button class="send-button">
-                                    <i class="far fa-paper-plane"></i>
-                                </button>
+                            <div class="row">
+                                <div class="input-box">
+                                    <input class="messanger-input" placeholder="Wiadomość"/>
+                                    <button class="send-button" id="sendMessage">
+                                        <i class="far fa-paper-plane"></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    
-    <div class="modal fade" id="addFriendModal" tabindex="-1" role="dialog" aria-labelledby="addFriendModalLabel" aria-hidden="false">
-        <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header" style="background-color: #0c5651;color: #dedede;border-bottom: none">
-                <h5 class="modal-title" id="addFriendModalLabel">Dodaj znajomego</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="opacity: 1;">
-                    <span aria-hidden="true" style="color: #dedede;">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body" style="background-color: #1ccc90;">
-                <div class="friend-name-input-box">
-                    <input />
-                    <button class="find-button">
-                        <i class="fas fa-search"></i>
+        
+        <div class="modal fade" id="addFriendModal" tabindex="-1" role="dialog" aria-labelledby="addFriendModalLabel" aria-hidden="false">
+            <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #0c5651;color: #dedede;border-bottom: none">
+                    <h5 class="modal-title" id="addFriendModalLabel">Dodaj znajomego</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="opacity: 1;">
+                        <span aria-hidden="true" style="color: #dedede;">&times;</span>
                     </button>
                 </div>
+                <div class="modal-body" style="background-color: #1ccc90;">
+                    <div class="friend-name-input-box">
+                        <input placeholder="Podaj imie i nazwisko lub email szukanej osoby" />
+                        <button class="find-button" id="friendSearch">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
             </div>
         </div>
-        </div>
-    </div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-   
-    <script>
-        var cluster_check = false;
-
-        $(document).ready(function(){
-            var box = [{userMsg: true, content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus in volutpat ligula. Etiam tempus quis massa rutrum lobortis. Integer ut scelerisque ex. Praesent in magna sed tellus viverra auctor. Morbi quis nisl tempor, mattis diam quis, aliquam magna. Proin eget pulvinar lectus. In non nisi sed ex molestie blandit. Curabitur dignissim tellus quis arcu cursus sagittis. Ut neque velit, pulvinar quis neque sit amet, porta feugiat diam. Morbi euismod sit amet urna et laoreet. Ut lacus justo, sodales vel volutpat sit amet, auctor id quam. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Fusce faucibus condimentum auctor."},{userMsg: true, content: "message"},{userMsg: true, content: "message"},{userMsg: false, content: "message #2"}, {userMsg: false, content: "message #3"}, {userMsg: false, content: "message #4"}];
-            box.forEach(msg => {
-                addMessage(msg)
-            });
-        });
-
-        function addMessage(msg){ //on new message recieved while online
-            var messageBoxTag = "#messageBoxTag";
-            var messageBlop = '<div class="d-flex flex-row${messageSide} mb-3 restore-paddings"><div class="d-inline-flex p-2 message-blop" data-author="${messageAuthor}"${clusterContent}>${messageContent}</div></div>';
-            var author = (msg.userMsg) ? "user":"sender";
-            var side = (msg.userMsg) ? "-reverse":"";
-            var check = $("#messageBoxTag")[0].children.length;
-            if(check != 0){
-                if($("#messageBoxTag")[0].children[0].children[0].dataset.author == author){
-                    if(cluster_check == false){
-                        $("#messageBoxTag")[0].children[0].classList.remove("mb-3");
-                        $("#messageBoxTag")[0].children[0].children[0].setAttribute("data-cluster", true);
-                        $("#messageBoxTag")[0].children[0].children[0].setAttribute("data-cluster-pos", "start");
-                        messageBlop = messageBlop.replace("${clusterContent}", " data-cluster=true data-cluster-pos=\"end\"");
-                        cluster_check = true;
-                    }else{
-                        $("#messageBoxTag")[0].children[0].classList.remove("mb-3");
-                        $("#messageBoxTag")[0].children[0].children[0].setAttribute("data-cluster-pos", "middle");
-                        messageBlop = messageBlop.replace("${clusterContent}", " data-cluster=true data-cluster-pos=\"end\"");
-                    }
-                }else{
-                    if(cluster_check){
-                        cluster_check = false;
-                    }
-                }
-            }
-            $(messageBoxTag).prepend(messageBlop.replace("${messageContent}", msg.content).replace("${messageAuthor}", author).replace("${messageSide}", side).replace("${clusterContent}", ""));
-        }
-
-    </script>
-</body>
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+        <script src="resources/js/script.js"></script>
+    </body>
 </html>
