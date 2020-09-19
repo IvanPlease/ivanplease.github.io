@@ -32,6 +32,13 @@ $(document).ready(function(){
         }
         element.val('');
     });
+    $.ajax({
+        method: "GET",
+        url: "https://delta-communicator.herokuapp.com/v1/users/1",
+        success: function(data){
+            console.log(data);
+        }
+    })
 });
 
 function addMessage(msg){ //on new message recieved while online
