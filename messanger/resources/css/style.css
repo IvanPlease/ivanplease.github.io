@@ -305,3 +305,13 @@ input:focus{
 *:focus{
     outline: none !important;
 }
+.searchData{    
+    display: block;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.searchBackground{
+    border-radius: 10px;
+    background-color: #0c565140;
+}
