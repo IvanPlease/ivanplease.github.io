@@ -6,10 +6,19 @@ $(document).ready(function(){
     var box = [{userMsg: true, content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus in volutpat ligula. Etiam tempus quis massa rutrum lobortis. Integer ut scelerisque ex. Praesent in magna sed tellus viverra auctor. Morbi quis nisl tempor, mattis diam quis, aliquam magna. Proin eget pulvinar lectus. In non nisi sed ex molestie blandit. Curabitur dignissim tellus quis arcu cursus sagittis. Ut neque velit, pulvinar quis neque sit amet, porta feugiat diam. Morbi euismod sit amet urna et laoreet. Ut lacus justo, sodales vel volutpat sit amet, auctor id quam. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Fusce faucibus condimentum auctor."},{userMsg: true, content: "message"},{userMsg: true, content: "message"},{userMsg: false, content: "message #2"}, {userMsg: false, content: "message #3"}, {userMsg: false, content: "message #4"}];
     $("#friendSearch").on('click', function(){
         var element = $("#friendSearch").parent().find("input");
-        var searchTerm = element.val();
+        var searchTerm = element.val().trim();
         var ajaxValue = {searchType: 0, searchValue: searchTerm};
         searchLogic(ajaxValue);
     });
+    $("#friendSearch").parent().find("input").keyup(function(e){
+        if (e.which <= 90 && e.which >= 48){
+            var element = $(this);
+            var searchTerm = element.val().trim();
+            var ajaxValue = {searchType: 0, searchValue: searchTerm};
+            clearSearchBox(false);
+            searchLogic(ajaxValue);
+        }
+    })
     $("#sendMessage").on('click', function(){
         var element = $("#sendMessage").parent().find("input");
         var inputMessage = element.val();
@@ -20,7 +29,7 @@ $(document).ready(function(){
         }
         element.val('');
     });
-    $("#addFriendModal").on('hidden.bs.modal', clearSearchBox);
+    $("#addFriendModal").on('hidden.bs.modal', clearSearchBox(true));
 });
 
 function addMessage(msg){ //on new message recieved while online
@@ -51,9 +60,11 @@ function addMessage(msg){ //on new message recieved while online
     $(messageBoxTag).prepend(messageBlop.replace("${messageContent}", msg.content).replace("${messageAuthor}", author).replace("${messageSide}", side).replace("${clusterContent}", ""));
 }
 
-function clearSearchBox(){
+function clearSearchBox(type){
+    if(type){
+        $("#searchBoxReturn").children().find(".friend-name-input-box>input").val('');
+    }
     $("#searchBoxReturn").children().not(":first").remove();
-    $("#searchBoxReturn").children().find(".friend-name-input-box>input").val('');
 }
 
 function searchLogic(ajaxValue){
@@ -74,8 +85,11 @@ function searchLogic(ajaxValue){
         success: function(data){
             data.forEach(user => {
                 var name = user.firstname + " " + user.lastname;
-                $("#searchBoxReturn").append(searchBox.replace("${dataPath}", user.profilePic.filePath).replace("${dataAlt}", user.profilePic.fileName).replace("${dataNameAndSurname}", name));
-            })
+                var box = $(searchBox.replace("${dataPath}", user.profilePic.filePath).replace("${dataAlt}", user.profilePic.fileName).replace("${dataNameAndSurname}", name))
+                            .hide()
+                            .fadeIn(500);
+                $("#searchBoxReturn").append(box);
+            });
         },
         error: function(data){
             console.log(data);

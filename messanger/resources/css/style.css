@@ -315,3 +315,6 @@ input:focus{
     border-radius: 10px;
     background-color: #0c565140;
 }
+.vh-50 {
+    height: 50vh!important;
+}
