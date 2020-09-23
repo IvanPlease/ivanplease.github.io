@@ -2,7 +2,7 @@ var cluster_check = false;
 var api_server = "https://delta-communicator.herokuapp.com";
 var api_local = "http://localhost:8080";
 var api_host = api_server;
-var user_id = "3";
+var user_id = "2";
 var conv_messages = [];
 var friends_count = 0;
 
@@ -47,6 +47,7 @@ $(document).ready(function(){
 });
 
 function initCheck(){
+    fetchFriends();
     $.ajax({
         url: api_host + "/v1/conv/user/" + user_id,
         method: "GET",
@@ -80,6 +81,7 @@ function checkForNewStuff(){
                 })
             });
             if(friends_count < data.length){
+                friends_count = data.length;
                 fetchFriends();
             }
         },
