@@ -1,11 +1,11 @@
 var cluster_check = false;
-var api_server = "https://delta-communicator.herokuapp.com/";
+var api_server = "https://delta-communicator.herokuapp.com";
 var api_local = "http://localhost:8080";
-var api_host = api_local;
-var id=1;
+var api_host = api_server;
+var user_id = "3";
+var conv_messages = [];
 
 $(document).ready(function(){
-    var friendBox = '<div class="d-flex flex-row friendRow"><div class="d-inline-flex p-2" data-conv-id="${dataConvId}"><div class="image-wrap"><img src="${dataImagePath}" alt="${dataImageAlt}"/></div><div>${dataUserName}<span data-status="${dataStatus}"></span></div></div></div>';
     $("#friendSearch").on('click', function(){
         var element = $("#friendSearch").parent().find("input");
         var searchTerm = element.val().trim();
@@ -21,32 +21,80 @@ $(document).ready(function(){
             searchLogic(ajaxValue);
         }
     })
-    $("#sendMessage").on('click', function(){
-        var element = $("#sendMessage").parent().find("input");
-        var inputMessage = element.val();
-        var reciever = $.trim($(".messanger-input").closest(".flex-column").find(".row:first-child").text());
-        var ajaxValue = {messageReceiver: reciever, messageValue: ""};
-        if($.trim(inputMessage)){
-            ajaxValue.messageValue = $.trim(inputMessage);
-        }
-        element.val('');
+    $(".layout-boxes").on('click', "#sendMessage", function(){
+        createMessage($(this));
     });
+    $(".layout-boxes").on('keypress', ".messanger-input", function(e){
+        if (e.keyCode === 13) {
+            e.preventDefault();
+            createMessage($("#sendMessage"));
+        }
+    })
     $("#addFriendModal").on('hidden.bs.modal', clearSearchBox(true));
     $("#searchBoxReturn").on('click', '.searchBackground', function(){
         var user = $(this).attr("data-user-id");
         $("#addFriendModal").modal('toggle');
-        createNewConvo(user);
-    });
-    $("#friendsBox").on('click', '.friendRow', function(){
         createConvo($(this));
     });
+    $("#friendsBox").on('click', '.friendRow', function(){
+        fetchConvo({element:$(this)});
+    });
+    fetchFriends();
+    initCheckkForNewMessages();
+    setInterval(function(){
+        checkForNewMessages();
+    },1000);
+});
+
+function initCheckkForNewMessages(){
     $.ajax({
-        url: api_host + "/v1/conv/user/" + id,
+        url: api_host + "/v1/conv/user/" + user_id,
         method: "GET",
         dataType: "json",
         success: function(data){
             data.forEach(conv => {
-                if(conv.authorUser.id == id){
+                conv_messages.push({id: conv.id, messagesCount: conv.conversationMessages.length});
+            });
+        },
+        error: function(data){
+            console.log(data);
+        }
+    });
+}
+
+function checkForNewMessages(){
+    $.ajax({
+        url: api_host + "/v1/conv/user/" + user_id,
+        method: "GET",
+        dataType: "json",
+        success: function(data){
+            data.forEach(conv => {
+                conv_messages.forEach(d => {
+                    if(conv.id == d.id){
+                        if(conv.conversationMessages.length > d.messagesCount && $(".messanger-input").attr("data-conv-id") == conv.id){
+                            d.messagesCount = conv.conversationMessages.length;
+                            fetchConvo({convId: conv.id});
+                        }
+                    }
+                })
+            });
+        },
+        error: function(data){
+            console.log(data);
+        }
+    });
+}
+
+function fetchFriends(){
+    $("#friendsBox").empty();
+    var friendBox = '<div class="d-flex flex-row friendRow"><div class="d-inline-flex p-2" data-conv-id="${dataConvId}"><div class="image-wrap"><img src="${dataImagePath}" alt="${dataImageAlt}"/></div><div>${dataUserName}<span data-status="${dataStatus}"></span></div></div></div>';
+    $.ajax({
+        url: api_host + "/v1/conv/user/" + user_id,
+        method: "GET",
+        dataType: "json",
+        success: function(data){
+            data.forEach(conv => {
+                if(conv.authorUser.id == user_id){
                     $("#friendsBox").append(friendBox.replace("${dataConvId}", conv.id)
                                                     .replace("${dataUserName}", conv.receiverUser.firstname + " " + conv.receiverUser.lastname)
                                                     .replace("${dataImagePath}", conv.receiverUser.profilePic.filePath)
@@ -65,7 +113,31 @@ $(document).ready(function(){
             console.log(data);
         }
     })
-});
+}
+
+function createMessage(el){
+    var element = el.parent().find("input");
+    var inputMessage = element.val().trim();
+    var reciever = $.trim($(".messanger-input").closest(".flex-column").find(".row:first-child").text());
+    var ajaxValue = {messageReceiver: reciever, messageValue: ""};
+    if($.trim(inputMessage)){
+        ajaxValue.messageValue = $.trim(inputMessage);
+    }
+    $.ajax({
+        url: api_host + "/v1/conv/msg",
+        method: "POST",
+        contentType: "application/json",
+        dataType: "json",
+        data: JSON.stringify({author: {id: user_id}, receiver: {id: element.attr("data-user-id")}, conversation: {id: element.attr("data-conv-id")}, content: inputMessage}),
+        success: function(data){
+            addMessage({content: data.content}, true);
+        },
+        error: function(data){
+            console.log(data);
+        }
+    });
+    element.val('');
+}
 
 function addMessage(msg, authorStatus){ //on new message recieved while online
     var messageBoxTag = "#messageBoxTag";
@@ -111,19 +183,21 @@ function searchLogic(ajaxValue){
     }else if(/\b[a-zA-Z]+\b$/g.test(ajaxValue.searchValue)){
         ajaxValue.searchType = 0;
     }
-    console.log(ajaxValue.searchValue);
     $.ajax({
         method: "GET",
-        url: api_local + "/v1/users",
+        url: api_host + "/v1/users",
+        contentType: "application/json",
         dataType: "json",
         data: ajaxValue,
         success: function(data){
             data.forEach(user => {
-                var name = user.firstname + " " + user.lastname;
-                var box = $(searchBox.replace("${dataPath}", user.profilePic.filePath).replace("${dataAlt}", user.profilePic.fileName).replace("${dataNameAndSurname}", name).replace("${dataId}", user.id))
-                            .hide()
-                            .fadeIn(500);
-                $("#searchBoxReturn").append(box);
+                if(user.id != user_id){
+                    var name = user.firstname + " " + user.lastname;
+                    var box = $(searchBox.replace("${dataPath}", user.profilePic.filePath).replace("${dataAlt}", user.profilePic.fileName).replace("${dataNameAndSurname}", name).replace("${dataId}", user.id))
+                                .hide()
+                                .fadeIn(500);
+                    $("#searchBoxReturn").append(box);
+                }
             });
         },
         error: function(data){
@@ -133,8 +207,26 @@ function searchLogic(ajaxValue){
 }
 
 function createConvo(element){
-    var convBox = '<div class="row"><div class="d-inline-flex p-2">${dataUserName}<span data-status="${dataStatus}"></span></div></div><div class="row"><div class="d-flex flex-column-reverse " id="messageBoxTag"></div></div><div class="row"><div class="input-box"><input class="messanger-input" placeholder="Wiadomość"/><button class="send-button" id="sendMessage"><i class="far fa-paper-plane"></i></button></div></div>'
-    var convId = element.children().attr("data-conv-id");
+    var recieverId = element.attr("data-user-id");
+    $.ajax({
+        url: api_host + "/v1/conv/",
+        method: "POST",
+        contentType: "application/json",
+        dataType: "json",
+        data: JSON.stringify({"authorUser": { "id": user_id}, "receiverUser": { "id": recieverId } }),
+        success: function(data){
+            fetchConvo({convId: data.id});
+            fetchFriends();
+        },
+        error: function(data){
+            console.log(data);
+        }
+    });
+}
+
+function fetchConvo(values){
+    var convBox = '<div class="row"><div class="d-inline-flex p-2">${dataUserName}<span data-status="${dataStatus}"></span></div></div><div class="row"><div class="d-flex flex-column-reverse " id="messageBoxTag"></div></div><div class="row"><div class="input-box"><input class="messanger-input" data-conv-id="${dataConvId}" data-user-id="${dataUserId}" placeholder="Wiadomość"/><button class="send-button" id="sendMessage"><i class="far fa-paper-plane"></i></button></div></div>'
+    var convId = (values.element) ?values.element.children().attr("data-conv-id"):values.convId;
     var author = false;
     $.ajax({
         url: api_host + "/v1/conv/"+ convId,
@@ -143,16 +235,20 @@ function createConvo(element){
         success: function(data){
             var element;
             $(".layout-boxes").empty();
-            if(data.authorUser.id == id){
+            if(data.authorUser.id == user_id){
                 element = $(convBox.replace("${dataUserName}", data.receiverUser.firstname + " " + data.receiverUser.lastname)
-                .replace("${dataStatus}", (status)?"online":"offline"));
+                .replace("${dataStatus}", (status)?"online":"offline")
+                .replace("${dataUserId}", data.receiverUser.id)
+                .replace("${dataConvId}", data.id));
             }else{
                 element = $(convBox.replace("${dataUserName}", data.authorUser.firstname + " " + data.authorUser.lastname)
-                .replace("${dataStatus}", (status)?"online":"offline"));
+                .replace("${dataStatus}", (status)?"online":"offline")
+                .replace("${dataUserId}", data.authorUser.id)
+                .replace("${dataConvId}", data.id));
             }
             $(".layout-boxes").append(element);
             data.conversationMessages.forEach(message => {
-                if(message.author.id == id){
+                if(message.author.id == user_id){
                     author = true;
                 }else{
                     author = false;
