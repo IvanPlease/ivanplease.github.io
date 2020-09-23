@@ -4,6 +4,7 @@ var api_local = "http://localhost:8080";
 var api_host = api_server;
 var user_id = "3";
 var conv_messages = [];
+var friends_count = 0;
 
 $(document).ready(function(){
     $("#friendSearch").on('click', function(){
@@ -39,14 +40,13 @@ $(document).ready(function(){
     $("#friendsBox").on('click', '.friendRow', function(){
         fetchConvo({element:$(this)});
     });
-    fetchFriends();
-    initCheckkForNewMessages();
+    initCheck();
     setInterval(function(){
-        checkForNewMessages();
+        checkForNewStuff();
     },1000);
 });
 
-function initCheckkForNewMessages(){
+function initCheck(){
     $.ajax({
         url: api_host + "/v1/conv/user/" + user_id,
         method: "GET",
@@ -55,6 +55,7 @@ function initCheckkForNewMessages(){
             data.forEach(conv => {
                 conv_messages.push({id: conv.id, messagesCount: conv.conversationMessages.length});
             });
+            friends_count = conv.length;
         },
         error: function(data){
             console.log(data);
@@ -62,7 +63,7 @@ function initCheckkForNewMessages(){
     });
 }
 
-function checkForNewMessages(){
+function checkForNewStuff(){
     $.ajax({
         url: api_host + "/v1/conv/user/" + user_id,
         method: "GET",
@@ -78,6 +79,9 @@ function checkForNewMessages(){
                     }
                 })
             });
+            if(friends_count < conv.length){
+                fetchFriends();
+            }
         },
         error: function(data){
             console.log(data);
