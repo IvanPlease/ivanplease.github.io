@@ -55,7 +55,7 @@ function initCheck(){
             data.forEach(conv => {
                 conv_messages.push({id: conv.id, messagesCount: conv.conversationMessages.length});
             });
-            friends_count = conv.length;
+            friends_count = data.length;
         },
         error: function(data){
             console.log(data);
@@ -79,7 +79,7 @@ function checkForNewStuff(){
                     }
                 })
             });
-            if(friends_count < conv.length){
+            if(friends_count < data.length){
                 fetchFriends();
             }
         },
